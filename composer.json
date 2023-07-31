@@ -1,0 +1,20 @@
+{
+    "name": "jackellis/my-php-framework",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Jack Ellis",
+            "email": "jackellis1504@gmail.com"
+        }
+    ],
+    "require": {
+      "php": "^8.2"
+    },
+    "require-dev": {
+        "symplify/easy-coding-standard": "^11.0"
+    }
+}
