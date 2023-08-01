@@ -13,11 +13,44 @@ use ReflectionClass;
 final class Router
 {
     public function __construct(
-        public readonly App $app
+        public readonly App $app,
+        public readonly string $baseDir
     ) {
+        foreach ($this->getNonDotFiles($baseDir) as $file) {
+            require_once $file;
+        }
     }
 
-    public function getAllControllersWithRoutes(): array
+    /**
+     * @return array<string>
+     */
+    private function getNonDotFiles(string $dir): array
+    {
+        $ret = [];
+        $subDirs = scandir($dir);
+        if (!$subDirs) {
+            return [];
+        }
+        foreach (array_filter(
+            $subDirs,
+            fn (string $str) => ! preg_match('/^\.+$/', $str)
+        ) as $subDir) {
+            $subDir = $dir . DIRECTORY_SEPARATOR . $subDir;
+            if (str_ends_with($subDir, '.php')) {
+                $ret[] = $subDir;
+            } else {
+                $ret = array_merge($ret, $this->getNonDotFiles($subDir));
+            }
+        }
+        return $ret;
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @return array<ControllerWithRoute>
+     */
+    private function getAllControllersWithRoutes(): array
     {
         $returnValue = [];
         $allControllerClasses = array_filter(

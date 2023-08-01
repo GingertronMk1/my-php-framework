@@ -12,7 +12,10 @@ final class HomeController extends AbstractController
 {
     public function handleRequest(): App
     {
-        $this->app->view = print_r($this, true);
+        ob_start();
+        var_dump($this->app);
+        $dump = ob_get_clean();
+        $this->app->view = $dump ?: 'nothing';
         return $this->app;
     }
 }

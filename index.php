@@ -11,30 +11,11 @@ use App\Model\Application\Router;
 //! Frankly sickening autoloading for now ======================================
 //! ============================================================================
 
-function getNonDotFiles(string $dir): array
-{
-    $ret = [];
-    foreach(array_filter(
-        scandir($dir),
-        fn (string $str) => ! preg_match('/^\.+$/', $str)
-    ) as $subDir) {
-        $subDir = $dir . DIRECTORY_SEPARATOR . $subDir;
-        if (str_ends_with($subDir, '.php')) {
-            $ret[] = $subDir;
-        } else {
-            $ret = array_merge($ret, getNonDotFiles($subDir));
-        }
-    }
-    return $ret;
-}
 
-foreach(getNonDotFiles(__DIR__ . DIRECTORY_SEPARATOR . 'src') as $file) {
-    require_once $file;
-}
 
 $app = App::createWithRequestFromGlobals();
 
-$router = new Router($app);
+$router = new Router($app, __DIR__ . DIRECTORY_SEPARATOR . 'src');
 
 $app = $router->route();
 
