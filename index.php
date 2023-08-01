@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 require __DIR__ . '/vendor/autoload.php';
 
+use App\Controller\HomeController;
 use App\Model\Application\App;
-use App\Model\Application\Router;
+use App\Model\Application\Routing\Route;
+use App\Model\Application\Routing\Router;
 
 //! ============================================================================
 //! Frankly sickening autoloading for now ======================================
@@ -15,7 +17,10 @@ use App\Model\Application\Router;
 
 $app = App::createWithRequestFromGlobals();
 
-$router = new Router($app, __DIR__ . DIRECTORY_SEPARATOR . 'src');
+$router = (new Router($app, __DIR__ . DIRECTORY_SEPARATOR . 'src'))
+    ->addRoutes(
+        Route::create('/', 'GET', HomeController::class, 'handleRequest')
+    );
 
 $app = $router->route();
 
