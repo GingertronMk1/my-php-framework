@@ -16,5 +16,9 @@
     },
     "require-dev": {
         "symplify/easy-coding-standard": "^11.0"
+    },
+    "scripts": {
+      "check": "./vendor/bin/ecs",
+      "fix": "@check --fix"
     }
 }

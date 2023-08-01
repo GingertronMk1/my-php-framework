@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Model\App;
+use App\Model\Application\App;
 
 abstract class AbstractController
 {
     public function __construct(
-        public readonly App $app
+        public App $app
     ) {
     }
 
