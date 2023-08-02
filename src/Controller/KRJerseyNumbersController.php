@@ -715,7 +715,9 @@ final class KRJerseyNumbersController extends AbstractController
             'td' => 'white-space: nowrap',
             'thead' => 'font-weight: 700',
             'tr:nth-of-type(14) > *' => 'border-top-width: 0.2rem;',
-            'tr:nth-of-type(18) > *' => 'border-top-width: 0.2rem;'
+            'tr:nth-of-type(18) > *' => 'border-top-width: 0.2rem;',
+            'tr' => 'background-color: white',
+            'tr:nth-of-type(2n)' => 'background-color: #ffbbbb'
         ];
         return $this->app;
     }
