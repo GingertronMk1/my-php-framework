@@ -8,9 +8,13 @@ use App\Model\Framework\App;
 use App\Model\Framework\RequestMethod;
 use Exception;
 use ReflectionClass;
+use ReflectionMethod;
 
 final readonly class Route
 {
+    /**
+     * @param class-string $controllerClass
+     */
     public function __construct(
         public string $path,
         public RequestMethod $requestMethod,
@@ -47,9 +51,22 @@ final readonly class Route
 
     public function doRouting(App $app): App
     {
-        $reflection = new ReflectionClass($this->controllerClass);
-        $actualController = $reflection->newInstance($app);
-        return call_user_func([$actualController, $this->methodName]);
+        $reflectionClass = new ReflectionClass($this->controllerClass);
+        $reflectedClass = $reflectionClass->newInstance($app);
+
+        $reflectionMethod = new ReflectionMethod(
+            $this->controllerClass,
+            $this->methodName
+        );
+        $result = $reflectionMethod->invoke($reflectedClass);
+        if (
+            gettype($result) === 'object'
+            && get_class($result) === App::class
+        ) {
+            return $result;
+        }
+
+        throw new Exception('Invalid class');
     }
 
     public static function get(
