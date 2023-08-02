@@ -9,14 +9,14 @@ use App\Model\Application\RequestMethod;
 use Exception;
 use ReflectionClass;
 
-final class Route
+final readonly class Route
 {
     public function __construct(
-        public readonly string $path,
-        public readonly RequestMethod $requestMethod,
-        public readonly string $controllerClass,
-        public readonly string $methodName,
-        public readonly bool $debugOnly = false
+        public string $path,
+        public RequestMethod $requestMethod,
+        public string $controllerClass,
+        public string $methodName,
+        public bool $debugOnly = false
     ) {
     }
 

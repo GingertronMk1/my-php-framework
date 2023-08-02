@@ -6,15 +6,15 @@ namespace App\Model\Application;
 
 use Exception;
 
-final class Request
+final readonly class Request
 {
     /**
      * @param array<string, mixed> $body
      */
     public function __construct(
-        public readonly string $uri,
-        public readonly RequestMethod $method,
-        public readonly array $body
+        public string $uri,
+        public RequestMethod $method,
+        public array $body
     ) {
     }
 
