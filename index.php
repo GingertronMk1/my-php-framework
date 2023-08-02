@@ -5,6 +5,7 @@ declare(strict_types=1);
 require __DIR__ . '/vendor/autoload.php';
 
 use App\Controller\HomeController;
+use App\Controller\KRJerseyNumbersController;
 use App\Model\Framework\App;
 use App\Model\Framework\Routing\Route;
 use App\Model\Framework\Routing\Router;
@@ -12,7 +13,14 @@ use App\Model\Framework\Routing\Router;
 $app = App::createWithRequestFromGlobals();
 
 $router = Router::create($app)
-    ->addRoutes(Route::get('/', HomeController::class, 'handleRequest'));
+    ->addRoutes(
+        Route::get('/', HomeController::class, 'handleRequest'),
+        Route::get(
+            '/jerseys',
+            KRJerseyNumbersController::class,
+            'handleRequest'
+        )
+    );
 
 $app = $router->route();
 
@@ -98,6 +106,7 @@ $app = $router->route();
     display: flex;
     flex-direction: column;
     background-color: var(--color-white);
+    overflow-x: auto;
   }
 
   table, th, td {
@@ -117,6 +126,8 @@ $app = $router->route();
   #debug-footer__checkbox:checked ~ #debug-footer__value {
     display: block
   }
+
+  <?= $app->renderStyle(); ?>
 </style>
 
 </html>

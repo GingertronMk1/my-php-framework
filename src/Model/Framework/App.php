@@ -10,6 +10,7 @@ final class App
         public readonly Request $request,
         public string $pageTitle = '',
         public string $view = '',
+        public array $style = [],
         public bool $debug = true
     ) {
         if (empty($pageTitle)) {
@@ -20,5 +21,14 @@ final class App
     public static function createWithRequestFromGlobals(): self
     {
         return new self(Request::createFromGlobals());
+    }
+
+    public function renderStyle(): string
+    {
+        $ret = '';
+        foreach ($this->style as $selector => $style) {
+            $ret .= "{$selector} { {$style} }" . PHP_EOL;
+        }
+        return $ret;
     }
 }

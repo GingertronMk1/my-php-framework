@@ -17,4 +17,13 @@ abstract class AbstractController
     {
         return $this->app;
     }
+
+    public function wrapInTags(
+        string $str,
+        string $tag,
+        array $tagAttrs = []
+    ): string {
+        $implodedAttrs = ' ' . implode(' ', $tagAttrs);
+        return "<{$tag}{$implodedAttrs}>{$str}</{$tag}>";
+    }
 }
