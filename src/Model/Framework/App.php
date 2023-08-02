@@ -27,6 +27,9 @@ final class App
     {
         $ret = '';
         foreach ($this->style as $selector => $style) {
+            if (is_array($style)) {
+                $style = implode(';', $style);
+            }
             $ret .= "{$selector} { {$style} }" . PHP_EOL;
         }
         return $ret;
