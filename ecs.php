@@ -5,6 +5,7 @@ declare(strict_types=1);
 use PhpCsFixer\Fixer\Import\NoUnusedImportsFixer;
 use Symplify\EasyCodingStandard\Config\ECSConfig;
 use Symplify\EasyCodingStandard\ValueObject\Set\SetList;
+use Symplify\CodingStandard\Fixer\LineLength\LineLengthFixer;
 
 return function (ECSConfig $ecsConfig): void {
     $ecsConfig->paths([
@@ -27,5 +28,9 @@ return function (ECSConfig $ecsConfig): void {
         SetList::COMMENTS,
         SetList::PSR_12,
         SetList::STRICT
+    ]);
+
+    $ecsConfig->ruleWithConfiguration(LineLengthFixer::class, [
+        LineLengthFixer::LINE_LENGTH => 80,
     ]);
 };
