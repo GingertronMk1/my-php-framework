@@ -9,18 +9,10 @@ use App\Model\Application\App;
 use App\Model\Application\Routing\Route;
 use App\Model\Application\Routing\Router;
 
-//! ============================================================================
-//! Frankly sickening autoloading for now ======================================
-//! ============================================================================
-
-
-
 $app = App::createWithRequestFromGlobals();
 
-$router = (new Router($app, __DIR__ . DIRECTORY_SEPARATOR . 'src'))
-    ->addRoutes(
-        Route::create('/', 'GET', HomeController::class, 'handleRequest')
-    );
+$router = Router::create($app)
+    ->addRoutes(Route::get('/', HomeController::class, 'handleRequest'));
 
 $app = $router->route();
 
