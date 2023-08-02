@@ -5,9 +5,9 @@ declare(strict_types=1);
 require __DIR__ . '/vendor/autoload.php';
 
 use App\Controller\HomeController;
-use App\Model\Application\App;
-use App\Model\Application\Routing\Route;
-use App\Model\Application\Routing\Router;
+use App\Model\Framework\App;
+use App\Model\Framework\Routing\Route;
+use App\Model\Framework\Routing\Router;
 
 $app = App::createWithRequestFromGlobals();
 

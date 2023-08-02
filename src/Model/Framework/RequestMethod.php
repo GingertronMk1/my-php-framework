@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Application;
+namespace App\Model\Framework;
 
 use Exception;
 

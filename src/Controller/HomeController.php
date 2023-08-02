@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Model\Application\App;
+use App\Model\Framework\App;
 
 final class HomeController extends AbstractController
 {

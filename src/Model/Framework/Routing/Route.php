@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Application\Routing;
+namespace App\Model\Framework\Routing;
 
-use App\Model\Application\App;
-use App\Model\Application\RequestMethod;
+use App\Model\Framework\App;
+use App\Model\Framework\RequestMethod;
 use Exception;
 use ReflectionClass;
 
