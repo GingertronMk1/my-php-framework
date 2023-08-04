@@ -2,10 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Framework;
+namespace App\Framework\Model;
 
 final class App
 {
+    /**
+     * @param array<string, string> $style
+     */
     public function __construct(
         public readonly Request $request,
         public string $pageTitle = '',
@@ -35,3 +38,4 @@ final class App
         return $ret;
     }
 }
+

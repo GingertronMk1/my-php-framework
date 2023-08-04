@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Framework\Routing;
+namespace App\Framework\Model\Routing;
 
-use App\Model\Framework\App;
+use App\Framework\Model\App;
 use Exception;
 
 final class Router
