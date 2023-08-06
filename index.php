@@ -43,13 +43,13 @@ $app = $router->route();
         <?= $app->view; ?>
     </div>
     <div class="debug-footer">
+        <input type="checkbox" id="debug-footer__checkbox" name="debug-checkbox">
+        <label for="debug-footer__checkbox" id="debug-footer__checkbox-label">
+        Show debug info?
+        </label>
         <pre id="debug-footer__value"><?= htmlspecialchars(
             print_r($app, true)
         ); ?></pre>
-        <input type="checkbox" id="debug-footer__checkbox" name="debug-checkbox">
-        <label for="debug-checkbox" id="debug-footer__checkbox-label">
-        Show debug info?
-        </label>
     </div>
     <footer>
     </footer>
