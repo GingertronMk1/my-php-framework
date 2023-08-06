@@ -6,9 +6,9 @@ require __DIR__ . '/vendor/autoload.php';
 
 use App\Controller\HomeController;
 use App\Controller\KRJerseyNumbersController;
-use App\Model\Framework\App;
-use App\Model\Framework\Routing\Route;
-use App\Model\Framework\Routing\Router;
+use App\Framework\Model\App;
+use App\Framework\Model\Routing\Route;
+use App\Framework\Model\Routing\Router;
 
 $app = App::createWithRequestFromGlobals();
 

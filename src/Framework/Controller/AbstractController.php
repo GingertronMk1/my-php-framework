@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Framework\Controller;
 
-use App\Model\Framework\App;
+use App\Framework\Model\App;
 
 abstract class AbstractController
 {
@@ -18,6 +18,9 @@ abstract class AbstractController
         return $this->app;
     }
 
+    /**
+     * @param array<string> $tagAttrs
+     */
     public function wrapInTags(
         string $str,
         string $tag,

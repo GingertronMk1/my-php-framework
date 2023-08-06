@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Model\Framework\App;
+use App\Framework\Model\App;
+use App\Framework\Controller\AbstractController;
 
 final class KRJerseyNumbersController extends AbstractController
 {

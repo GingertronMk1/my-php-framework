@@ -2,13 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Framework;
+namespace App\Framework\Model;
 
 use Resource;
 use SplFileObject;
 
 final class App
 {
+    /**
+     * @param array<string, string> $style
+     */
     public function __construct(
         public readonly Request $request,
         public readonly string $baseDir,
@@ -52,3 +55,4 @@ final class App
         return $fileContents;
     }
 }
+
