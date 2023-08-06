@@ -22,7 +22,11 @@ $router = Router::create($app)
         )
     );
 
-$app = $router->route();
+try {
+    $app = $router->route();
+} catch (Exception $e) {
+    $app = App::fromException($e);
+}
 
 ?>
 

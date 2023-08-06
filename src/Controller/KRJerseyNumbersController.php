@@ -19,6 +19,11 @@ final class KRJerseyNumbersController extends AbstractController
 
         if (!is_array($playersAndNumbers)) {
             throw new Exception('Players and numbers not an array');
+        } else {
+            array_walk(
+                $playersAndNumbers,
+                fn (mixed $year) => is_array($year) ? $year : throw new Exception("Players for {$year} are not an array")
+            );
         }
 
         $highestJersey = max(
@@ -28,6 +33,9 @@ final class KRJerseyNumbersController extends AbstractController
         $groupedPlayers = [];
 
         foreach ($playersAndNumbers as $year => $players) {
+            if (!is_array($players)) {
+                throw new Exception("Players for {$year} are not an array");
+            }
             for ($i = 1; $i <= $highestJersey; $i++) {
                 $player = $players[$i] ?? '';
                 if (! isset($groupedPlayers[$i])) {

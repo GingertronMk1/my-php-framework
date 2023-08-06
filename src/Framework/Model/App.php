@@ -63,4 +63,11 @@ final class App
         }
         return $fileContents;
     }
+
+    public static function fromException(Exception $e): self
+    {
+        $app = self::createWithRequestFromGlobals();
+        $app->view = '<pre>' . print_r($e, true) . '</pre>';
+        return $app;
+    }
 }
