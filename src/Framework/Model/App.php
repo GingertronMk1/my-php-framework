@@ -48,15 +48,14 @@ final class App
     public function getDataFileContents(
         string $fileName,
         bool $isJson = false
-    ): mixed
-    {
+    ): mixed {
         $fullFilePath = "{$this->baseDir}/data/{$fileName}";
         if (! file_exists($fullFilePath)) {
             throw new \Exception("File {$fullFilePath} does not exist");
         }
         $fileContents = file_get_contents($fullFilePath);
         if ($isJson) {
-            if (!is_string($fileContents)) {
+            if (! is_string($fileContents)) {
                 throw new Exception("Invalid JSON in file `{$fullFilePath}`");
             }
             return json_decode($fileContents, true);
@@ -71,13 +70,18 @@ final class App
         ob_start();
         include("{$viewsDir}/views/{$viewName}");
         $var = ob_get_clean();
+        if ($var === false) {
+            return "There was an error rendering {$viewName}";
+        }
         return $var;
     }
 
     public static function fromException(Exception $e): self
     {
         $app = self::createWithRequestFromGlobals();
-        $app->view = $app->getView('framework/exception.php', ['exception' => $e]);
+        $app->view = $app->getView('framework/exception.php', [
+            'exception' => $e,
+        ]);
         return $app;
     }
 }

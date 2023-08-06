@@ -29,5 +29,4 @@ abstract class AbstractController
         $implodedAttrs = ' ' . implode(' ', $tagAttrs);
         return "<{$tag}{$implodedAttrs}>{$str}</{$tag}>";
     }
-
 }
