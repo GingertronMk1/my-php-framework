@@ -4,14 +4,17 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Framework\Model\App;
 use App\Framework\Controller\AbstractController;
+use App\Framework\Model\App;
 
 final class KRJerseyNumbersController extends AbstractController
 {
     public function handleRequest(): App
     {
-        $playersAndNumbers = $this->app->getDataFileContents('jerseys.json', true);
+        $playersAndNumbers = $this->app->getDataFileContents(
+            'jerseys.json',
+            true
+        );
 
         $highestJersey = max(
             array_map(fn (array $arr) => count($arr), $playersAndNumbers)
@@ -31,21 +34,27 @@ final class KRJerseyNumbersController extends AbstractController
 
         $topRow = array_merge(['No.'], array_keys($groupedPlayers[1]));
 
-        $str = $this->wrapInTags($this->wrapInTags(
-            implode(
-                '',
-                array_map(
-                    fn (string $name) => $this->wrapInTags($name, 'td'),
-                    $topRow
-                )
+        $str = $this->wrapInTags(
+            $this->wrapInTags(
+                implode(
+                    '',
+                    array_map(
+                        fn (string $name) => $this->wrapInTags($name, 'td'),
+                        $topRow
+                    )
+                ),
+                'tr'
             ),
-            'tr'
-        ),
-        'thead');
+            'thead'
+        );
 
         foreach ($groupedPlayers as $jerseyNumber => $players) {
             $str .= $this->wrapInTags(
-                $this->wrapInTags((string) $jerseyNumber, 'th', ['class="headcol"'])
+                $this->wrapInTags(
+                    (string) $jerseyNumber,
+                    'th',
+                    ['class="headcol"']
+                )
                 . implode(
                     '',
                     array_map(
@@ -65,7 +74,7 @@ final class KRJerseyNumbersController extends AbstractController
             'tr:nth-of-type(14) > *' => 'border-top-width: 0.2rem;',
             'tr:nth-of-type(18) > *' => 'border-top-width: 0.2rem;',
             'tr' => 'background-color: white',
-            'tr:nth-of-type(2n)' => 'background-color: #ffbbbb'
+            'tr:nth-of-type(2n)' => 'background-color: #ffbbbb',
         ];
         return $this->app;
     }

@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace App\Framework\Model;
 
-use Resource;
-use SplFileObject;
-
 final class App
 {
     /**
@@ -25,9 +22,13 @@ final class App
         }
     }
 
-    public static function createWithRequestFromGlobals(?string $baseDir = null): self
-    {
-        return new self(Request::createFromGlobals(), $baseDir ?? $_SERVER['DOCUMENT_ROOT']);
+    public static function createWithRequestFromGlobals(
+        ?string $baseDir = null
+    ): self {
+        return new self(
+            Request::createFromGlobals(),
+            $baseDir ?? $_SERVER['DOCUMENT_ROOT']
+        );
     }
 
     public function renderStyle(): string
@@ -42,10 +43,12 @@ final class App
         return $ret;
     }
 
-    public function getDataFileContents(string $fileName, bool $isJson = false): string|array|false
-    {
+    public function getDataFileContents(
+        string $fileName,
+        bool $isJson = false
+    ): string|array|false {
         $fullFilePath = "{$this->baseDir}/data/{$fileName}";
-        if (!file_exists($fullFilePath)) {
+        if (! file_exists($fullFilePath)) {
             throw new \Exception("File {$fullFilePath} does not exist");
         }
         $fileContents = file_get_contents($fullFilePath);
@@ -55,4 +58,3 @@ final class App
         return $fileContents;
     }
 }
-
