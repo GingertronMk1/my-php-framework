@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace App\Framework\Model;
 
+use Exception;
+
 final class App
 {
     /**
-     * @param array<string, string> $style
+     * @param array<string, string|array<string>> $style
      */
     public function __construct(
         public readonly Request $request,
@@ -46,13 +48,17 @@ final class App
     public function getDataFileContents(
         string $fileName,
         bool $isJson = false
-    ): string|array|false {
+    ): mixed
+    {
         $fullFilePath = "{$this->baseDir}/data/{$fileName}";
         if (! file_exists($fullFilePath)) {
             throw new \Exception("File {$fullFilePath} does not exist");
         }
         $fileContents = file_get_contents($fullFilePath);
         if ($isJson) {
+            if (!is_string($fileContents)) {
+                throw new Exception("Invalid JSON in file `{$fullFilePath}`");
+            }
             return json_decode($fileContents, true);
         }
         return $fileContents;

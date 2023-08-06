@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Framework\Controller\AbstractController;
 use App\Framework\Model\App;
+use Exception;
 
 final class KRJerseyNumbersController extends AbstractController
 {
@@ -15,6 +16,10 @@ final class KRJerseyNumbersController extends AbstractController
             'jerseys.json',
             true
         );
+
+        if (!is_array($playersAndNumbers)) {
+            throw new Exception('Players and numbers not an array');
+        }
 
         $highestJersey = max(
             array_map(fn (array $arr) => count($arr), $playersAndNumbers)
