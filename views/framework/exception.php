@@ -9,7 +9,7 @@
             <th>Function</th>
             <th>Line</th>
             <th>Type</th>
-            <!-- <th>Args</th> -->
+            <th>Args</th>
         </tr>
     </thead>
     <?php foreach($exception->getTrace() as $key => $value):
@@ -25,7 +25,7 @@
             <td><?= $function; ?></td>
             <td><?= $line; ?></td>
             <td><?= $type; ?></td>
-            <!-- <td><?= var_export($args); ?></td> -->
+            <td><pre><?= var_export($args); ?></pre></td>
         </tr>
     <?php endforeach; ?>
 </table>

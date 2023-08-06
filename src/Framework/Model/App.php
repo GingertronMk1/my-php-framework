@@ -82,6 +82,12 @@ final class App
         $app->view = $app->getView('framework/exception.php', [
             'exception' => $e,
         ]);
+        $app->style = [
+            'td>pre' => [
+                'overflow-y: scroll',
+                'max-height: 200px'
+            ]
+        ];
         return $app;
     }
 }

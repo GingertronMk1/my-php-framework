@@ -121,6 +121,12 @@ try {
     padding: 0.5rem;
   }
 
+  pre {
+    margin: 0;
+    padding: 0;
+    font-family: monospace;
+  }
+
   #debug-footer__value {
     display: none;
     padding: 1rem;
