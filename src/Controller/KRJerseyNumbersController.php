@@ -22,7 +22,10 @@ final class KRJerseyNumbersController extends AbstractController
         } else {
             array_walk(
                 $playersAndNumbers,
-                fn (mixed $year) => is_array($year) ? $year : throw new Exception("Players for {$year} are not an array")
+                fn (mixed $players, int $year) =>
+                    is_array($players)
+                    ? $players
+                    : throw new Exception("Players for {$year} are not an array")
             );
         }
 

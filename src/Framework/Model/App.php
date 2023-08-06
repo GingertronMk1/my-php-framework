@@ -64,10 +64,20 @@ final class App
         return $fileContents;
     }
 
+    private function getView(string $viewName, array $variables): string
+    {
+        extract($variables);
+        $viewsDir = $this->baseDir;
+        ob_start();
+        include("{$viewsDir}/views/{$viewName}");
+        $var = ob_get_clean();
+        return $var;
+    }
+
     public static function fromException(Exception $e): self
     {
         $app = self::createWithRequestFromGlobals();
-        $app->view = '<pre>' . print_r($e, true) . '</pre>';
+        $app->view = $app->getView('framework/exception.php', ['exception' => $e]);
         return $app;
     }
 }
