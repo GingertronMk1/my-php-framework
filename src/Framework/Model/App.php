@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace App\Framework\Model;
 
+use App\Framework\Model\Style\Style;
 use Exception;
 
 final class App
 {
     /**
-     * @param array<string, string|array<string>> $style
+     * @param array<Style> $style
      */
     public function __construct(
         public readonly Request $request,
@@ -36,11 +37,8 @@ final class App
     public function renderStyle(): string
     {
         $ret = '';
-        foreach ($this->style as $selector => $style) {
-            if (is_array($style)) {
-                $style = implode(';', $style);
-            }
-            $ret .= "{$selector} { {$style} }" . PHP_EOL;
+        foreach ($this->style as $style) {
+            $ret .= $style . PHP_EOL;
         }
         return $ret;
     }
@@ -86,8 +84,19 @@ final class App
             'exception' => $e,
         ]);
         $app->style = [
-            'td>pre' => ['overflow-y: scroll', 'max-height: 200px'],
+            Style::create('td>pre', [
+                'overflow-y' => 'scroll',
+                'max-height' => '200px',
+            ]),
         ];
         return $app;
+    }
+
+    public function addStyles(Style ...$styles): self
+    {
+        foreach ($styles as $style) {
+            $this->style[] = $style;
+        }
+        return $this;
     }
 }

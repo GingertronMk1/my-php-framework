@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Framework\Controller\AbstractController;
 use App\Framework\Model\App;
+use App\Framework\Model\Style\Style;
 use Exception;
 
 final class KRJerseyNumbersController extends AbstractController
@@ -87,12 +88,24 @@ final class KRJerseyNumbersController extends AbstractController
         $str = $this->wrapInTags($str, 'table');
         $this->app->view = $str;
         $this->app->style = [
-            'td' => 'white-space: nowrap',
-            'thead' => 'font-weight: 700',
-            'tr:nth-of-type(14) > *' => 'border-top-width: 0.2rem;',
-            'tr:nth-of-type(18) > *' => 'border-top-width: 0.2rem;',
-            'tr' => 'background-color: white',
-            'tr:nth-of-type(2n)' => 'background-color: #ffbbbb',
+            Style::create('td', [
+                'white-space' => 'nowrap',
+            ]),
+            Style::create('thead', [
+                'font-weight' => '700',
+            ]),
+            Style::create('tr:nth-of-type(14) > *', [
+                'border-top-width' => '0.2rem;',
+            ]),
+            Style::create('tr:nth-of-type(18) > *', [
+                'border-top-width' => '0.2rem;',
+            ]),
+            Style::create('tr', [
+                'background-color' => 'white',
+            ]),
+            Style::create('tr:nth-of-type(2n)', [
+                'background-color' => '#ffbbbb',
+            ]),
         ];
         return $this->app;
     }
