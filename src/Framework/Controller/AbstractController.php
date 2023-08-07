@@ -20,7 +20,7 @@ abstract class AbstractController
 
     /**
      * @param string|array<string> $str
-     * @param array<string> $tagAttrs
+     * @param array<string, string> $tagAttrs
      */
     public function wrapInTags(
         string|array $str,
@@ -30,7 +30,10 @@ abstract class AbstractController
         if (is_array($str)) {
             $str = implode(PHP_EOL, $str);
         }
-        $implodedAttrs = implode(' ', $tagAttrs);
-        return "<{$tag} {$implodedAttrs}>{$str}</{$tag}>";
+        $attrs = "";
+        foreach ($tagAttrs as $attrName => $attrValue) {
+            $attrs .= "\n{$attrName}=\"{$attrValue}\"";
+        }
+        return "<{$tag} {$attrs}>{$str}</{$tag}>";
     }
 }

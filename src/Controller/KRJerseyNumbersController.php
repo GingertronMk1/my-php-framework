@@ -73,7 +73,7 @@ final class KRJerseyNumbersController extends AbstractController
                     $this->wrapInTags(
                         (string) $jerseyNumber,
                         'th',
-                        ['class="headcol"']
+                        ['class' => 'headcol']
                     ),
                     ...array_map(
                         fn (string $name) => $this->wrapInTags($name, 'td'),
