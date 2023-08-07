@@ -32,8 +32,8 @@ abstract class AbstractController
         }
         $attrs = "";
         foreach ($tagAttrs as $attrName => $attrValue) {
-            $attrs .= "\n{$attrName}=\"{$attrValue}\"";
+            $attrs .= " {$attrName}=\"{$attrValue}\"";
         }
-        return "<{$tag} {$attrs}>{$str}</{$tag}>";
+        return "<{$tag}{$attrs}>{$str}</{$tag}>";
     }
 }

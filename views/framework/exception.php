@@ -1,4 +1,5 @@
-<?php /** @var Exception $exception */ ?>
+<?php declare(strict_types=1);
+/** @var Exception $exception */ ?>
 <h1><?= $exception->getMessage(); ?></h1>
 
 <table>
@@ -13,12 +14,12 @@
         </tr>
     </thead>
     <?php foreach($exception->getTrace() as $key => $value):
-            $class = $value['class'] ?? null;
-            $function = $value['function'] ?? null;
-            $line = $value['line'] ?? null;
-            $type = $value['type'] ?? null;
-            $args = $value['args'] ?? null;
-    ?>
+        $class = $value['class'] ?? null;
+        $function = $value['function'] ?? null;
+        $line = $value['line'] ?? null;
+        $type = $value['type'] ?? null;
+        $args = $value['args'] ?? null;
+        ?>
         <tr>
             <td><?= $key; ?></td>
             <td><?= $class; ?></td>

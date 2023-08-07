@@ -10,7 +10,8 @@ use Symplify\CodingStandard\Fixer\LineLength\LineLengthFixer;
 return function (ECSConfig $ecsConfig): void {
     $ecsConfig->paths([
         __DIR__ . '/src',
-        __DIR__ . '/index.php'
+        __DIR__ . '/index.php',
+        __DIR__ . '/views'
     ]);
 
     // this way you add a single rule

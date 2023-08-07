@@ -9,6 +9,7 @@ use App\Controller\KRJerseyNumbersController;
 use App\Framework\Model\App;
 use App\Framework\Model\Routing\Route;
 use App\Framework\Model\Routing\Router;
+use App\Framework\Model\Style\Style;
 
 $app = App::createWithRequestFromGlobals();
 
@@ -32,13 +33,15 @@ try {
 
 <!DOCTYPE html>
 <html>
+
 <head>
-  <meta charset="utf-8">
-  <title><?= $app->pageTitle; ?></title>
-  <meta name="author" content="">
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <title><?= $app->pageTitle; ?></title>
+    <meta name="author" content="">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
+
 <body>
     <header class="header">
         <h1><?= $app->pageTitle; ?></h1>
@@ -49,7 +52,7 @@ try {
     <div class="debug-footer">
         <input type="checkbox" id="debug-footer__checkbox" name="debug-checkbox">
         <label for="debug-footer__checkbox" id="debug-footer__checkbox-label">
-        Show debug info?
+            Show debug info?
         </label>
         <pre id="debug-footer__value"><?= htmlspecialchars(
             print_r($app, true)
@@ -63,81 +66,19 @@ try {
 
 <!-- Variable declarations -->
 <style lang="css">
-:root {
-    --color-primary: #ff8800;
-    --color-secondary: #5dbaff;
-    --color-white: #ffffff;
-}
+    <?= Style::create(':root', [
+                '--color-primary' => '#ff8800',
+                '--color-secondary' => '#5dbaff',
+                '--color-white' => '#ffffff',
+            ]); ?>
 </style>
 
-<style lang="css">
-  * {
-    box-sizing: border-box;
-    font-family: sans-serif;
-  }
+<!-- Actual styles -->
+<?php include('views/framework/base-styles.php'); ?>
 
-  html,
-  body {
-    margin: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    background-color: var(--color-secondary);
-  }
-
-  <?php foreach(range(1, 6) as $h): ?>
-    h<?= $h; ?> {
-        margin: 0;
-    }
-  <?php endforeach; ?>
-
-  .header {
-    padding: 1rem;
-    display: flex;
-    flex-direction: row;
-    justify-content: stretch;
-    background: linear-gradient(var(--color-primary) 0%, var(--color-white) 250%);
-  }
-
-  .body {
-    flex: 1;
-    width: 95%;
-    max-width: 1600px;
-    margin: 0 auto;
-    padding: 0.5rem;
-    display: flex;
-    flex-direction: column;
-    background-color: var(--color-white);
-    overflow-x: auto;
-  }
-
-  table, th, td {
-    border-collapse: collapse;
-    border: 1px solid black;
-  }
-  td {
-    padding: 0.5rem;
-  }
-
-  pre {
-    margin: 0;
-    padding: 0;
-    font-family: monospace;
-  }
-
-  #debug-footer__value {
-    display: none;
-    padding: 1rem;
-    font-family: monospace;
-  }
-
-  #debug-footer__checkbox:checked ~ #debug-footer__value {
-    display: block
-  }
-
-  <?= $app->renderStyle(); ?>
+<!-- App styling -->
+<style>
+    <?= $app->renderStyle(); ?>
 </style>
 
 </html>
