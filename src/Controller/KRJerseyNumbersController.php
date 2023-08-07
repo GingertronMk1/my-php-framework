@@ -87,7 +87,7 @@ final class KRJerseyNumbersController extends AbstractController
 
         $str = $this->wrapInTags($str, 'table');
         $this->app->view = $str;
-        $this->app->style = [
+        $this->app->setStyle(
             Style::create('td', [
                 'white-space' => 'nowrap',
             ]),
@@ -106,7 +106,7 @@ final class KRJerseyNumbersController extends AbstractController
             Style::create('tr:nth-of-type(2n)', [
                 'background-color' => '#ffbbbb',
             ]),
-        ];
+        );
         return $this->app;
     }
 }

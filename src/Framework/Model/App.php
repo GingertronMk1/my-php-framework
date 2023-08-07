@@ -83,12 +83,12 @@ final class App
         $app->view = $app->getView('framework/exception.php', [
             'exception' => $e,
         ]);
-        $app->style = [
+        $app->setStyle(
             Style::create('td>pre', [
                 'overflow-y' => 'scroll',
                 'max-height' => '200px',
             ]),
-        ];
+        );
         return $app;
     }
 
@@ -98,5 +98,11 @@ final class App
             $this->style[] = $style;
         }
         return $this;
+    }
+
+    public function setStyle(Style ...$styles): self
+    {
+        $this->style = [];
+        return $this->addStyles(...$styles);
     }
 }
