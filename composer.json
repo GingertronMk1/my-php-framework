@@ -21,6 +21,10 @@
     "scripts": {
       "check": "./vendor/bin/ecs",
       "fix": "@check --fix",
-      "stan": "./vendor/bin/phpstan analyse"
+      "stan": "./vendor/bin/phpstan analyse",
+      "preflight": [
+        "@fix",
+        "@stan"
+      ]
     }
 }

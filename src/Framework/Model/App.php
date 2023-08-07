@@ -51,7 +51,7 @@ final class App
     ): mixed {
         $fullFilePath = "{$this->baseDir}/data/{$fileName}";
         if (! file_exists($fullFilePath)) {
-            throw new \Exception("File {$fullFilePath} does not exist");
+            throw new Exception("File {$fullFilePath} does not exist");
         }
         $fileContents = file_get_contents($fullFilePath);
         if ($isJson) {
@@ -63,6 +63,9 @@ final class App
         return $fileContents;
     }
 
+    /**
+     * @param array<string, mixed> $variables
+     */
     private function getView(string $viewName, array $variables): string
     {
         extract($variables);
@@ -83,10 +86,7 @@ final class App
             'exception' => $e,
         ]);
         $app->style = [
-            'td>pre' => [
-                'overflow-y: scroll',
-                'max-height: 200px'
-            ]
+            'td>pre' => ['overflow-y: scroll', 'max-height: 200px'],
         ];
         return $app;
     }
