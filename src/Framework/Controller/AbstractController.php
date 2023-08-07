@@ -30,7 +30,7 @@ abstract class AbstractController
         if (is_array($str)) {
             $str = implode(PHP_EOL, $str);
         }
-        $implodedAttrs = ' ' . implode(' ', $tagAttrs);
-        return "<{$tag}{$implodedAttrs}>{$str}</{$tag}>";
+        $implodedAttrs = implode(' ', $tagAttrs);
+        return "<{$tag} {$implodedAttrs}>{$str}</{$tag}>";
     }
 }
