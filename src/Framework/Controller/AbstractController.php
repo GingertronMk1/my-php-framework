@@ -19,13 +19,17 @@ abstract class AbstractController
     }
 
     /**
+     * @param string|array<string> $str
      * @param array<string> $tagAttrs
      */
     public function wrapInTags(
-        string $str,
+        string|array $str,
         string $tag,
         array $tagAttrs = []
     ): string {
+        if (is_array($str)) {
+            $str = implode(PHP_EOL, $str);
+        }
         $implodedAttrs = ' ' . implode(' ', $tagAttrs);
         return "<{$tag}{$implodedAttrs}>{$str}</{$tag}>";
     }

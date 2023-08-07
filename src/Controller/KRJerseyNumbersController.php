@@ -69,18 +69,17 @@ final class KRJerseyNumbersController extends AbstractController
 
         foreach ($groupedPlayers as $jerseyNumber => $players) {
             $str .= $this->wrapInTags(
-                $this->wrapInTags(
-                    (string) $jerseyNumber,
-                    'th',
-                    ['class="headcol"']
-                )
-                . implode(
-                    '',
-                    array_map(
+                [
+                    $this->wrapInTags(
+                        (string) $jerseyNumber,
+                        'th',
+                        ['class="headcol"']
+                    ),
+                    ...array_map(
                         fn (string $name) => $this->wrapInTags($name, 'td'),
                         $players
-                    )
-                ),
+                    ),
+                ],
                 'tr'
             );
         }
