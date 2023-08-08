@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+
+if sh -c ": >/dev/tty" >/dev/null 2>/dev/null; then
+    echo "TTY is available"
+    docker-compose exec app "$@"
+else
+    echo "TTY is not available"
+    docker-compose exec -T app "$@"
+fi

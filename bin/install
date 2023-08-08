@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+echo "Building"
+docker-compose build
+
+echo "Going up"
+docker-compose up -d
+
+echo "Installing composer deps"
+./bin/composer install
