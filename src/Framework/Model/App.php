@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Framework\Model;
 
+use App\Framework\Exception\AppException;
 use App\Framework\Model\Style\Style;
 use Exception;
 
@@ -49,12 +50,12 @@ final class App
     ): mixed {
         $fullFilePath = "{$this->baseDir}/data/{$fileName}";
         if (! file_exists($fullFilePath)) {
-            throw new Exception("File {$fullFilePath} does not exist");
+            throw AppException::fileDoesNotExist($fullFilePath);
         }
         $fileContents = file_get_contents($fullFilePath);
         if ($isJson) {
             if (! is_string($fileContents)) {
-                throw new Exception("Invalid JSON in file `{$fullFilePath}`");
+                throw AppException::invalidJSON($fullFilePath);
             }
             return json_decode($fileContents, true);
         }

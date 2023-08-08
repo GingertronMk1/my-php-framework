@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Framework\Model;
 
-use Exception;
+use App\Framework\Exception\RequestException;
 
 enum RequestMethod: string
 {
@@ -19,11 +19,13 @@ enum RequestMethod: string
 
     public static function getFromString(string $method): self
     {
+        $caseValues = [];
         foreach (self::cases() as $case) {
             if ($method === $case->value) {
                 return $case;
             }
+            $caseValues[] = $case->value;
         }
-        throw new Exception("{$method} is not supported", 405);
+        throw RequestException::invalidMethod($method, $caseValues);
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Framework\Model\Routing;
 
+use App\Framework\Exception\RouteException;
 use App\Framework\Model\App;
 use App\Framework\Model\RequestMethod;
 use Exception;
@@ -32,11 +33,22 @@ final readonly class Route
         bool $debugOnly = false
     ): self {
         if (! class_exists($controllerClass)) {
-            throw new Exception("{$controllerClass} is not a valid class.");
+            throw RouteException::invalidClass($controllerClass);
         }
         if (! method_exists($controllerClass, $methodName)) {
-            throw new Exception(
-                "{$controllerClass}::{$methodName} is not a valid method."
+            throw RouteException::invalidMethod($controllerClass, $methodName);
+        }
+
+        $reflectionMethod = new ReflectionMethod(
+            $controllerClass,
+            $methodName
+        );
+        $returnType = (string) $reflectionMethod->getReturnType();
+        if ($returnType !== App::class) {
+            throw RouteException::invalidMethodType(
+                $controllerClass,
+                $methodName,
+                $returnType
             );
         }
 

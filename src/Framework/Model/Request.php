@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Framework\Model;
 
-use Exception;
+use App\Framework\Exception\RequestException;
 
 final readonly class Request
 {
@@ -21,7 +21,7 @@ final readonly class Request
     public static function createFromGlobals(): self
     {
         if (! (isset($_ENV['REQUEST_URI']) || isset($_ENV['REQUEST_METHOD']))) {
-            throw new Exception('No request value');
+            throw RequestException::noRequest();
         }
         return new self(
             $_ENV['REQUEST_URI'],
