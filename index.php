@@ -10,19 +10,18 @@ use App\Framework\Model\App;
 use App\Framework\Model\Routing\Route;
 use App\Framework\Model\Routing\Router;
 
-$router = new Router([
-    Route::get('/', HomeController::class, 'handleRequest', 'index'),
-    Route::get(
-        '/jerseys',
-        KRJerseyNumbersController::class,
-        'handleRequest',
-        'jerseys'
-    ),
-]);
-
-$app = App::createWithRequestFromGlobals($router);
 try {
-    $app = $app->route();
+    $router = new Router([
+        Route::get('/', HomeController::class, 'handleRequest', 'index'),
+        Route::get(
+            '/jerseys',
+            KRJerseyNumbersController::class,
+            'handleRequest',
+            'jerseys'
+        ),
+    ]);
+
+    $app = App::createWithRequestFromGlobals($router)->route();
 } catch (Exception $e) {
     $app = App::fromException($e);
 }
