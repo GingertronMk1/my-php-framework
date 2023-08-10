@@ -62,7 +62,7 @@ try {
             Show debug info?
         </label>
         <pre id="debug-footer__value"><?= htmlspecialchars(
-            print_r($app, true)
+            var_export($app, true)
         ); ?></pre>
     </div>
     <footer>
