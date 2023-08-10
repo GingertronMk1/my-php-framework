@@ -7,11 +7,9 @@ namespace App\Framework\Model\Style;
 final readonly class BaseStyles
 {
     /**
-     * @var array<Style>
+     * @return array<Style>
      */
-    public array $styles;
-
-    public function __construct()
+    public static function get(): array
     {
         $styles = [
             Style::create(':root', [
@@ -112,7 +110,7 @@ final readonly class BaseStyles
             ]);
         }
 
-        $this->styles = array_map(
+        return array_map(
             fn (Style $style) => $style->normaliseChildren(),
             $styles
         );

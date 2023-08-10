@@ -32,7 +32,7 @@ final class App
         if (empty($pageTitle)) {
             $this->pageTitle = $request->uri;
         }
-        $this->baseStyle = (new BaseStyles())->styles;
+        $this->baseStyle = BaseStyles::get();
     }
 
     public static function createWithRequestFromGlobals(
