@@ -9,14 +9,13 @@ use App\Framework\Model\Routing\Router;
 use App\Framework\Model\Style\BaseStyles;
 use App\Framework\Model\Style\Style;
 use Exception;
-use Stringable;
 
 final class App
 {
     /**
      * @var array<Style>
      */
-    public readonly array $baseStyles;
+    public readonly array $baseStyle;
 
     /**
      * @param array<Style> $style
@@ -33,7 +32,7 @@ final class App
         if (empty($pageTitle)) {
             $this->pageTitle = $request->uri;
         }
-        $this->baseStyles = (new BaseStyles())->styles;
+        $this->baseStyle = (new BaseStyles())->styles;
     }
 
     public static function createWithRequestFromGlobals(
@@ -117,34 +116,11 @@ final class App
 
     public function printBaseStyles(): string
     {
-        return $this->wrapInTags($this->baseStyles, 'style', [
-            'lang' => 'css',
-        ]);
+        return Style::printInTags(...$this->baseStyle);
     }
 
     public function printStyle(): string
     {
-        return $this->wrapInTags($this->style, 'style', [
-            'lang' => 'css',
-        ]);
-    }
-
-    /**
-     * @param string|Stringable|array<string|Stringable> $str
-     * @param array<string, string> $tagAttrs
-     */
-    public function wrapInTags(
-        string|Stringable|array $str,
-        string $tag,
-        array $tagAttrs = []
-    ): string {
-        if (is_array($str)) {
-            $str = implode(PHP_EOL, $str);
-        }
-        $attrs = "";
-        foreach ($tagAttrs as $attrName => $attrValue) {
-            $attrs .= " {$attrName}=\"{$attrValue}\"";
-        }
-        return "<{$tag}{$attrs}>{$str}</{$tag}>";
+        return Style::printInTags(...$this->style);
     }
 }

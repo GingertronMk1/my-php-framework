@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Framework\Controller\AbstractController;
 use App\Framework\Model\App;
+use App\Framework\Model\Html;
 use App\Framework\Model\Style\Style;
 use Exception;
 
@@ -53,15 +54,12 @@ final class KRJerseyNumbersController extends AbstractController
 
         $topRow = array_merge(['No.'], array_keys($groupedPlayers[1]));
 
-        $str = $this->app->wrapInTags(
-            $this->app->wrapInTags(
+        $str = Html::wrapInTags(
+            Html::wrapInTags(
                 implode(
                     '',
                     array_map(
-                        fn (string $name) => $this->app->wrapInTags(
-                            $name,
-                            'td'
-                        ),
+                        fn (string $name) => Html::wrapInTags($name, 'td'),
                         $topRow
                     )
                 ),
@@ -71,9 +69,9 @@ final class KRJerseyNumbersController extends AbstractController
         );
 
         foreach ($groupedPlayers as $jerseyNumber => $players) {
-            $str .= $this->app->wrapInTags(
+            $str .= Html::wrapInTags(
                 [
-                    $this->app->wrapInTags(
+                    Html::wrapInTags(
                         (string) $jerseyNumber,
                         'th',
                         [
@@ -81,10 +79,7 @@ final class KRJerseyNumbersController extends AbstractController
                         ]
                     ),
                     ...array_map(
-                        fn (string $name) => $this->app->wrapInTags(
-                            $name,
-                            'td'
-                        ),
+                        fn (string $name) => Html::wrapInTags($name, 'td'),
                         $players
                     ),
                 ],
@@ -92,7 +87,7 @@ final class KRJerseyNumbersController extends AbstractController
             );
         }
 
-        $str = $this->app->wrapInTags($str, 'table');
+        $str = Html::wrapInTags($str, 'table');
         $this->app->view = $str;
         $this->app->setStyle(
             Style::create('td', [

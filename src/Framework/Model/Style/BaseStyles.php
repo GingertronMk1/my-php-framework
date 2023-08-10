@@ -61,16 +61,17 @@ final readonly class BaseStyles
                         'margin-left' => 'auto',
                     ],
                     Style::create(
-                        '> a:not(:first-of-type)',
-                        [
-                            'padding-left' => '0.5rem',
-                        ],
-                        Style::create('span', [
-                            'color' => 'red',
-                        ]),
-                        Style::create('div', [
-                            'color' => 'blue',
-                        ]),
+                        '> a',
+                        [],
+                        Style::create(
+                            '& + &',
+                            [
+                                'margin-left' => '0.5rem',
+                            ],
+                        ),
+                        Style::create('&.light', [
+                            'color' => 'white',
+                        ])
                     )
                 )
             ),
