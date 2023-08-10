@@ -58,7 +58,10 @@ final class KRJerseyNumbersController extends AbstractController
                 implode(
                     '',
                     array_map(
-                        fn (string $name) => $this->app->wrapInTags($name, 'td'),
+                        fn (string $name) => $this->app->wrapInTags(
+                            $name,
+                            'td'
+                        ),
                         $topRow
                     )
                 ),
@@ -78,7 +81,10 @@ final class KRJerseyNumbersController extends AbstractController
                         ]
                     ),
                     ...array_map(
-                        fn (string $name) => $this->app->wrapInTags($name, 'td'),
+                        fn (string $name) => $this->app->wrapInTags(
+                            $name,
+                            'td'
+                        ),
                         $players
                     ),
                 ],

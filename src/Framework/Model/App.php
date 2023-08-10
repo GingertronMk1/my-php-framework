@@ -9,6 +9,7 @@ use App\Framework\Model\Routing\Router;
 use App\Framework\Model\Style\BaseStyles;
 use App\Framework\Model\Style\Style;
 use Exception;
+use Stringable;
 
 final class App
 {
@@ -116,21 +117,24 @@ final class App
 
     public function printBaseStyles(): string
     {
-        return $this->wrapInTags($this->baseStyles, 'style', ['lang' => 'css']);
+        return $this->wrapInTags($this->baseStyles, 'style', [
+            'lang' => 'css',
+        ]);
     }
 
     public function printStyle(): string
     {
-        return $this->wrapInTags($this->style, 'style', ['lang' => 'css']);
+        return $this->wrapInTags($this->style, 'style', [
+            'lang' => 'css',
+        ]);
     }
 
-
     /**
-     * @param string|array<string> $str
+     * @param string|Stringable|array<string|Stringable> $str
      * @param array<string, string> $tagAttrs
      */
     public function wrapInTags(
-        string|array $str,
+        string|Stringable|array $str,
         string $tag,
         array $tagAttrs = []
     ): string {
@@ -143,5 +147,4 @@ final class App
         }
         return "<{$tag}{$attrs}>{$str}</{$tag}>";
     }
-
 }

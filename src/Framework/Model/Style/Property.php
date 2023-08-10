@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Framework\Model\Style;
 
-class Property
+use Stringable;
+
+class Property implements Stringable
 {
     public function __construct(
         public readonly string $property,

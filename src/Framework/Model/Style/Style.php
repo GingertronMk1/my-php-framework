@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Framework\Model\Style;
 
-final readonly class Style
+use Stringable;
+
+final readonly class Style implements Stringable
 {
     /**
      * @param array<Property> $properties
@@ -63,10 +65,7 @@ final readonly class Style
 
     public function __toString(): string
     {
-        $properties = implode(
-            PHP_EOL,
-            $this->properties
-        );
+        $properties = implode(PHP_EOL, $this->properties);
         return "{$this->selector} {\n{$properties}\n}\n\n"
                 . implode(
                     PHP_EOL,

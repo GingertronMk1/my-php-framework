@@ -9,7 +9,6 @@ use App\Controller\KRJerseyNumbersController;
 use App\Framework\Model\App;
 use App\Framework\Model\Routing\Route;
 use App\Framework\Model\Routing\Router;
-use App\Framework\Model\Style\Style;
 
 $router = new Router([
     Route::get('/', HomeController::class, 'handleRequest', 'index'),
