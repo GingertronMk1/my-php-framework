@@ -5,17 +5,25 @@ declare(strict_types=1);
 namespace App\Framework\Model;
 
 use App\Framework\Exception\AppException;
+use App\Framework\Model\Routing\Router;
+use App\Framework\Model\Style\BaseStyles;
 use App\Framework\Model\Style\Style;
 use Exception;
 
 final class App
 {
     /**
+     * @var array<Style>
+     */
+    public readonly array $baseStyles;
+
+    /**
      * @param array<Style> $style
      */
     public function __construct(
         public readonly Request $request,
         public readonly string $baseDir,
+        public Router $router,
         public string $pageTitle = '',
         public string $view = '',
         public array $style = [],
@@ -24,24 +32,18 @@ final class App
         if (empty($pageTitle)) {
             $this->pageTitle = $request->uri;
         }
+        $this->baseStyles = (new BaseStyles())->styles;
     }
 
     public static function createWithRequestFromGlobals(
+        Router $router,
         ?string $baseDir = null
     ): self {
         return new self(
             Request::createFromGlobals(),
-            $baseDir ?? $_SERVER['DOCUMENT_ROOT']
+            $baseDir ?? $_SERVER['DOCUMENT_ROOT'],
+            $router
         );
-    }
-
-    public function renderStyle(): string
-    {
-        $ret = '';
-        foreach ($this->style as $style) {
-            $ret .= $style . PHP_EOL;
-        }
-        return $ret;
     }
 
     public function getDataFileContents(
@@ -80,7 +82,7 @@ final class App
 
     public static function fromException(Exception $e): self
     {
-        $app = self::createWithRequestFromGlobals();
+        $app = self::createWithRequestFromGlobals(new Router());
         $app->view = $app->getView('framework/exception.php', [
             'exception' => $e,
         ]);
@@ -106,4 +108,40 @@ final class App
         $this->style = [];
         return $this->addStyles(...$styles);
     }
+
+    public function route(): self
+    {
+        return $this->router->route($this);
+    }
+
+    public function printBaseStyles(): string
+    {
+        return $this->wrapInTags($this->baseStyles, 'style', ['lang' => 'css']);
+    }
+
+    public function printStyle(): string
+    {
+        return $this->wrapInTags($this->style, 'style', ['lang' => 'css']);
+    }
+
+
+    /**
+     * @param string|array<string> $str
+     * @param array<string, string> $tagAttrs
+     */
+    public function wrapInTags(
+        string|array $str,
+        string $tag,
+        array $tagAttrs = []
+    ): string {
+        if (is_array($str)) {
+            $str = implode(PHP_EOL, $str);
+        }
+        $attrs = "";
+        foreach ($tagAttrs as $attrName => $attrValue) {
+            $attrs .= " {$attrName}=\"{$attrValue}\"";
+        }
+        return "<{$tag}{$attrs}>{$str}</{$tag}>";
+    }
+
 }

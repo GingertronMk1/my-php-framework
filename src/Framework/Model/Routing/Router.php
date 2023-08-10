@@ -4,33 +4,33 @@ declare(strict_types=1);
 
 namespace App\Framework\Model\Routing;
 
+use App\Framework\Exception\RouterException;
 use App\Framework\Model\App;
 use Exception;
 
 final class Router
 {
     /**
+     * @var array<Route>
+     */
+    public array $routes = [];
+
+    /**
      * @param array<Route> $routes
      */
-    public function __construct(
-        public readonly App $app,
-        public array $routes = []
-    ) {
-    }
-
-    public static function create(App $app): self
+    public function __construct(array $routes = [])
     {
-        return new self($app, []);
+        $this->addRoutes(...$routes);
     }
 
     // This is madness
-    public function route(): App
+    public function route(App $app): App
     {
-        $appRequestMethod = $this->app->request->method;
-        $appRequestURI = $this->app->request->uri;
+        $appRequestMethod = $app->request->method;
+        $appRequestURI = $app->request->uri;
         foreach ($this->routes as $route) {
             if ($route->path === $appRequestURI && $route->requestMethod === $appRequestMethod) {
-                return $route->doRouting($this->app);
+                return $route->doRouting($app);
             }
         }
 
@@ -39,16 +39,21 @@ final class Router
 
     public function addRoute(Route $route): self
     {
-        if (
-            ! empty(
-                array_filter(
-                    $this->routes,
-                    fn (Route $currentRoute) => $currentRoute->controllerClass === $route->controllerClass && $currentRoute->methodName === $route->methodName
-                ))) {
-            throw new Exception(
-                'Cannot use the same controller and method for multiple routes'
-            );
+        foreach ($this->routes as $currentRoute) {
+            if (
+                $route->path === $currentRoute->path &&
+                $route->requestMethod === $currentRoute->requestMethod
+            ) {
+                throw RouterException::pathAndMethodTaken(
+                    $route->path,
+                    $route->requestMethod
+                );
+            }
+            if ($route->name !== '' && $route->name === $currentRoute->name) {
+                throw RouterException::nameTaken($route->name);
+            }
         }
+
         $this->routes[] = $route;
         return $this;
     }
@@ -59,5 +64,16 @@ final class Router
             $this->addRoute($route);
         }
         return $this;
+    }
+
+    public function getRouteFromName(string $name): Route
+    {
+        foreach ($this->routes as $route) {
+            if ($route->name === $name) {
+                return $route;
+            }
+        }
+
+        throw RouterException::noRouteFoundWithName($name);
     }
 }

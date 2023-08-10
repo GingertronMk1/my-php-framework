@@ -11,20 +11,19 @@ use App\Framework\Model\Routing\Route;
 use App\Framework\Model\Routing\Router;
 use App\Framework\Model\Style\Style;
 
-$app = App::createWithRequestFromGlobals();
+$router = new Router([
+    Route::get('/', HomeController::class, 'handleRequest', 'index'),
+    Route::get(
+        '/jerseys',
+        KRJerseyNumbersController::class,
+        'handleRequest',
+        'jerseys'
+    ),
+]);
 
-$router = Router::create($app)
-    ->addRoutes(
-        Route::get('/', HomeController::class, 'handleRequest'),
-        Route::get(
-            '/jerseys',
-            KRJerseyNumbersController::class,
-            'handleRequest'
-        )
-    );
-
+$app = App::createWithRequestFromGlobals($router);
 try {
-    $app = $router->route();
+    $app = $app->route();
 } catch (Exception $e) {
     $app = App::fromException($e);
 }
@@ -45,6 +44,14 @@ try {
 <body>
     <header class="header">
         <h1><?= $app->pageTitle; ?></h1>
+        <div class="header__links">
+        <a href="<?= $app->router->getRouteFromName(
+            'index'
+        )->path; ?>">Index</a>
+        <a href="<?= $app->router->getRouteFromName(
+            'jerseys'
+        )->path; ?>">Jerseys</a>
+        </div>
     </header>
     <div class="body">
         <?= $app->view; ?>
@@ -64,21 +71,10 @@ try {
 <script>
 </script>
 
-<!-- Variable declarations -->
-<style lang="css">
-    <?= Style::create(':root', [
-                '--color-primary' => '#ff8800',
-                '--color-secondary' => '#5dbaff',
-                '--color-white' => '#ffffff',
-            ]); ?>
-</style>
-
-<!-- Actual styles -->
-<?php include('views/framework/base-styles.php'); ?>
+<!-- Base styles -->
+<?= $app->printBaseStyles(); ?>
 
 <!-- App styling -->
-<style>
-    <?= $app->renderStyle(); ?>
-</style>
+<?= $app->printStyle(); ?>
 
 </html>

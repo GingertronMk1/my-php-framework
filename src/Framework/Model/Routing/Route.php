@@ -21,6 +21,7 @@ final readonly class Route
         public RequestMethod $requestMethod,
         public string $controllerClass,
         public string $methodName,
+        public string $name = '',
         public bool $debugOnly = false
     ) {
     }
@@ -30,6 +31,7 @@ final readonly class Route
         RequestMethod $requestMethod,
         string $controllerClass,
         string $methodName,
+        string $name = '',
         bool $debugOnly = false
     ): self {
         if (! class_exists($controllerClass)) {
@@ -57,6 +59,7 @@ final readonly class Route
             $requestMethod,
             $controllerClass,
             $methodName,
+            $name,
             $debugOnly
         );
     }
@@ -85,6 +88,7 @@ final readonly class Route
         string $path,
         string $controllerClass,
         string $methodName,
+        string $name = '',
         bool $debugOnly = false
     ): self {
         return self::create(
@@ -92,6 +96,7 @@ final readonly class Route
             RequestMethod::GET,
             $controllerClass,
             $methodName,
+            $name,
             $debugOnly
         );
     }
@@ -100,6 +105,7 @@ final readonly class Route
         string $path,
         string $controllerClass,
         string $methodName,
+        string $name = '',
         bool $debugOnly = false
     ): self {
         return self::create(
@@ -107,6 +113,7 @@ final readonly class Route
             RequestMethod::POST,
             $controllerClass,
             $methodName,
+            $name,
             $debugOnly
         );
     }

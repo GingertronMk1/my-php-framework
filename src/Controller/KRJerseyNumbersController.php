@@ -53,12 +53,12 @@ final class KRJerseyNumbersController extends AbstractController
 
         $topRow = array_merge(['No.'], array_keys($groupedPlayers[1]));
 
-        $str = $this->wrapInTags(
-            $this->wrapInTags(
+        $str = $this->app->wrapInTags(
+            $this->app->wrapInTags(
                 implode(
                     '',
                     array_map(
-                        fn (string $name) => $this->wrapInTags($name, 'td'),
+                        fn (string $name) => $this->app->wrapInTags($name, 'td'),
                         $topRow
                     )
                 ),
@@ -68,9 +68,9 @@ final class KRJerseyNumbersController extends AbstractController
         );
 
         foreach ($groupedPlayers as $jerseyNumber => $players) {
-            $str .= $this->wrapInTags(
+            $str .= $this->app->wrapInTags(
                 [
-                    $this->wrapInTags(
+                    $this->app->wrapInTags(
                         (string) $jerseyNumber,
                         'th',
                         [
@@ -78,7 +78,7 @@ final class KRJerseyNumbersController extends AbstractController
                         ]
                     ),
                     ...array_map(
-                        fn (string $name) => $this->wrapInTags($name, 'td'),
+                        fn (string $name) => $this->app->wrapInTags($name, 'td'),
                         $players
                     ),
                 ],
@@ -86,7 +86,7 @@ final class KRJerseyNumbersController extends AbstractController
             );
         }
 
-        $str = $this->wrapInTags($str, 'table');
+        $str = $this->app->wrapInTags($str, 'table');
         $this->app->view = $str;
         $this->app->setStyle(
             Style::create('td', [

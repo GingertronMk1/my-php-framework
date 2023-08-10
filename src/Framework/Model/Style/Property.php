@@ -14,6 +14,6 @@ class Property
 
     public function __toString(): string
     {
-        return "{$this->property}: {$this->value};";
+        return "\t{$this->property}: {$this->value};";
     }
 }
